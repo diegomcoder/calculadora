@@ -1,7 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Rationale&display=swap');
 
+:root {
+    --funct-btns-color: rgba(109, 199, 252, 0.11);
+    --opert-btns-color: rgba(255, 46, 175, 0.11);
+    --numbr-btns-color-onhover: rgba(251, 255, 0, 0.212);
+    --opert-btns-color-onhover: rgba(248, 62, 186, 0.363);
+    --funct-btns-color-onhover: rgba(109, 200, 252, 0.329);
+    --numbr-btns-color-onclick: rgba(251, 255, 0, 0.781);
+    --opert-btns-color-onclick: rgb(255, 0, 170);
+    --funct-btns-color-onclick: rgb(35, 185, 255);
+    --function-btns-height: 4.2rem;
+}
+
 html {
-    background-image: url("./image/background.jpg");
+    background-image: url("../image/background.jpg");
     background-position: center;
     background-size: cover;
     height: 100vh;
@@ -21,10 +33,12 @@ html {
     padding: 10px;
 }
 
-p {
+.display-digits {
     margin: 0;
-    font-size: 2rem;
+    font-size: 2.8rem;
     font-family: 'Rationale', sans-serif;
+    color: rgba(123, 255, 0, 0.651);
+    user-select: none;
 }
 
 button {
@@ -39,16 +53,58 @@ button {
     height: 4rem;
 }
 
-button:hover {
-    background-color: rgba(255, 255,255,0.08);
+.number-btn:hover {
+    background-color: var(--numbr-btns-color-onhover);
+}
+
+.operator-btn:hover {
+    background-color: var(--opert-btns-color-onhover);
+}
+
+.function-btn:hover,
+.doublezero-btn:hover,
+.comma-btn:hover,
+.equal-btn:hover {
+    background-color: var(--funct-btns-color-onhover);
+}
+
+.number-btn:active {
+    background-color: var(--numbr-btns-color-onclick);
+}
+
+.operator-btn:active {
+    background-color: var(--opert-btns-color-onclick);
+}
+
+.function-btn:active,
+.doublezero-btn:active,
+.comma-btn:active,
+.equal-btn:active {
+    background-color: var(--funct-btns-color-onclick);
+}
+
+.function-btn,
+.doublezero-btn,
+.comma-btn,
+.equal-btn {
+    background-color: var(--funct-btns-color);
+}
+
+.function-btn,
+.division-btn {
+    height: var(--function-btns-height);
+}
+
+.operator-btn {
+    background-color: var(--opert-btns-color);
 }
 
 #calc-frame {
     width: min-content;
     background-image: linear-gradient(to right top, rgba(255,255,255,0.2), rgba(255,255,255, 0.02));
     border-radius: 25px;
-    backdrop-filter: blur(5.6px);
-    -webkit-backdrop-filter: blur(5.6px);
+    backdrop-filter: blur(3.6px);
+    -webkit-backdrop-filter: blur(3.6px);
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(255,255,255,0.2);
