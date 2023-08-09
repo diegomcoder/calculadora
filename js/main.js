@@ -1,44 +1,72 @@
 const display = document.querySelector('.display-digits')
-const validOperators = ['+','-','*','/']
+const isNumber = new RegExp("^[0-9]{1}$")
+const isOperator = new RegExp("^[+*-/]{1}$")
+const isCommand = new RegExp("\b^Enter$|^Backspace$|^=$|^c$|")
+let result = 0
 
-function isValidNumber(command) {
-    const isANumber = parseInt(command) >= 0 && parseInt(command) <= 9
-    const displayIsClear = display.innerText == '0'
+function updateDisplay() {
+    display.innerText = result
+}
 
-    if (isANumber && displayIsClear) {
-        display.innerText = command
-    } else if (isANumber) {
-        display.innerText = display.innerText + command
+function appendNumber(input) {
+    if (result == 0 && input != 0){
+        result = input
+    } else {
+        result += input
     }
 }
 
-function isValidOperator(command) {
-    if (validOperators.some((item)=> item == command)) {
-        display.innerText = display.innerText + command
+function calculate(input) {
+    if (result != 0) {
+        result += input
     }
 }
 
-function backspace(command) {
-    const displayLenght = display.innerText.length
+function getResult() {
+    console.log("inside getresult")
+    if (result == 0) return
 
-    if (command == 'Backspace' && displayLenght > 1) {
-        display.innerText = display.innerText.slice(0, displayLenght -1)
-    } else if (command == 'Backspace' && display.innerText != '0') {
-        display.innerText = '0'
+    for (let i = 0; i < result.length; i++) {
+        console.log(i)
     }
 }
 
-function clear(command) {
-    if (command == 'c')
-        display.innerText = 0
+function checkInput(input) {
+    console.log("inside checkInput at the beginning", input, isCommand.test(input))
+    if (isNumber.test(input)) {
+        appendNumber(input)
+    } else if (isOperator.test(input)) {
+        calculate(input)
+    } else if (isCommand.test(input)) {
+        console.log("inside checkinput")
+        getResult()
+    }
+
+    updateDisplay()
+}
+
+function backspace(input) {
+    if (input == 'Backspace' && result.length > 1) {
+        result =result.slice(0, result.length -1)
+    } else if (input == 'Backspace' && result != '0') {
+        result = '0'
+    }
+
+    updateDisplay()
+}
+
+function clear(input) {
+    if (input == 'c')
+        result = 0
+
+    updateDisplay()
 }
 
 
 window.addEventListener('keyup', function (e) {
     const keyPressed = e.key
 
-    isValidOperator(keyPressed)
-    isValidNumber(keyPressed)
+    checkInput(keyPressed)
     backspace(keyPressed)
 })
 
@@ -46,8 +74,7 @@ window.addEventListener('click', function (e) {
     const elementClicked = e.target
     const keyPressed = elementClicked.dataset.command
 
-    isValidOperator(keyPressed)
-    isValidNumber(keyPressed)
+    checkInput(keyPressed)
     backspace(keyPressed)
     clear(keyPressed)
 })
