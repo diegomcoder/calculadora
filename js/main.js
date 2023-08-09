@@ -24,9 +24,13 @@ function calculate(input) {
 
 function getResult() {
     if (result == 0) return
+    let num1
+    let num2
 
     for (let i = 0; i < result.length; i++) {
-        console.log(i)
+        if (isNumber.test(result[i])) {
+            num1 += result[i]
+        }
     }
 }
 
