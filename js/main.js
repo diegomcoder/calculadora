@@ -9,7 +9,7 @@ function updateDisplay() {
 }
 
 function appendNumber(input) {
-    if (result == 0 && input != 0){
+    if (result == 0){
         result = input
     } else {
         result += input
@@ -24,12 +24,34 @@ function calculate(input) {
 
 function getResult() {
     if (result == 0) return
-    let num1
-    let num2
+    let currentNumber = 0
+    let operator = ""
+    let partialResult = 0
 
     for (let i = 0; i < result.length; i++) {
+        
         if (isNumber.test(result[i])) {
-            num1 += result[i]
+            currentNumber += result[i]
+        } else if (isOperator.test(result[i])) {
+            operator = result[i]
+            partialResult = parseInt(currentNumber)
+            currentNumber = ""
+        }
+        
+        if (i == result.length -1) {
+            if (operator == "+") {
+                result = parseInt(partialResult) + parseInt(currentNumber)
+                operator = ""
+            } else if (operator == "-") {
+                result = parseInt(partialResult) - parseInt(currentNumber)
+                operator = ""
+            } else if (operator == "*") {
+                result = parseInt(partialResult) * parseInt(currentNumber)
+                operator = ""
+            } else if (operator == "/") {
+                result = parseInt(partialResult) / parseInt(currentNumber)
+                operator = ""
+            }
         }
     }
 }
@@ -39,7 +61,7 @@ function checkInput(input) {
         appendNumber(input)
     } else if (isOperator.test(input)) {
         calculate(input)
-    } else if (isCommand.test(input)) {
+    } else if (isCommand.test(input) && (input == "Enter" || input == "=")) {
         getResult()
     }
 
@@ -47,10 +69,14 @@ function checkInput(input) {
 }
 
 function backspace(input) {
-    if (input == 'Backspace' && result.length > 1) {
-        result =result.slice(0, result.length -1)
+    const resultLength = result.toString().length
+
+    if (input == 'Backspace' && resultLength > 1) {
+        result = parseInt(result.toString().slice(0, resultLength -1))
+        
     } else if (input == 'Backspace' && result != '0') {
         result = '0'
+
     }
 
     updateDisplay()
