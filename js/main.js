@@ -32,28 +32,46 @@ function getResult() {
         
         if (isNumber.test(result[i])) {
             currentNumber += result[i]
-        } else if (isOperator.test(result[i])) {
+        } else if (isOperator.test(result[i]) && partialResult == 0) {
             operator = result[i]
             partialResult = parseInt(currentNumber)
             currentNumber = ""
+        } else if (operator == "+" && i < result.length -1) {
+            operator = result[i]
+            partialResult = parseInt(partialResult) + parseInt(currentNumber)
+            currentNumber = 0
+        } else if (operator == "-" && i < result.length -1) {
+            operator = result[i]
+            partialResult = parseInt(partialResult) - parseInt(currentNumber)
+            currentNumber = 0
+        } else if (operator == "*" && i < result.length -1) {
+            operator = result[i]
+            partialResult = parseInt(partialResult) * parseInt(currentNumber)
+            currentNumber = 0
+        } else if (operator == "/" && i < result.length -1) {
+            operator = result[i]
+            partialResult = parseInt(partialResult) / parseInt(currentNumber)
+            currentNumber = 0
         }
         
         if (i == result.length -1) {
             if (operator == "+") {
-                result = parseInt(partialResult) + parseInt(currentNumber)
+                partialResult = parseInt(partialResult) + parseInt(currentNumber)
                 operator = ""
             } else if (operator == "-") {
-                result = parseInt(partialResult) - parseInt(currentNumber)
+                partialResult = parseInt(partialResult) - parseInt(currentNumber)
                 operator = ""
             } else if (operator == "*") {
-                result = parseInt(partialResult) * parseInt(currentNumber)
+                partialResult = parseInt(partialResult) * parseInt(currentNumber)
                 operator = ""
             } else if (operator == "/") {
-                result = parseInt(partialResult) / parseInt(currentNumber)
+                partialResult = parseInt(partialResult) / parseInt(currentNumber)
                 operator = ""
             }
         }
     }
+    
+    result = partialResult
 }
 
 function checkInput(input) {
