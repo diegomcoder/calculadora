@@ -23,7 +23,6 @@ function calculate(input) {
 }
 
 function getResult() {
-    console.log("inside getresult")
     if (result == 0) return
 
     for (let i = 0; i < result.length; i++) {
@@ -32,13 +31,11 @@ function getResult() {
 }
 
 function checkInput(input) {
-    console.log("inside checkInput at the beginning", input, isCommand.test(input))
     if (isNumber.test(input)) {
         appendNumber(input)
     } else if (isOperator.test(input)) {
         calculate(input)
     } else if (isCommand.test(input)) {
-        console.log("inside checkinput")
         getResult()
     }
 
